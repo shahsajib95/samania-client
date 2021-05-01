@@ -1,0 +1,8 @@
+.agree{
+    text-align: justify;
+}
+.agree span{
+    border-bottom: 1px dotted;
+    font-weight: 800;
+    margin: 5px;
+}

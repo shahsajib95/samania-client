@@ -1,0 +1,6 @@
+.userPending img{
+    border-radius: 50%;
+}
+.userPending .card-body .text-des{
+    margin-left: 10px;
+}

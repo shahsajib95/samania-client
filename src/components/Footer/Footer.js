@@ -1,28 +1,30 @@
 import moment from 'moment';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
+import { LanguageContext } from '../context/Language';
 
 const Footer = () => {
     const { footer } = useSelector(state => state.modeData)
-    console.log(footer)
+    const { dataLang } = useContext(LanguageContext)
+    const { name, tag, link, topDes } = dataLang[0].footer
     return (
         <div className="p-5" style={{ backgroundColor: footer.color }}>
             <div className="row">
                 <div className="col-md-5">
-                    <img src="/img/AsHabusSamaniyyah.png" alt="logo" width="100px" height="100px" />
-                    <h1>As Habus Samaniyyah</h1>
-                    <p className="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it</p>
+                    <img src="/img/AsHabusSamaniyyah.png" alt="logo" width="150px" />
+                    <h1 className="mt-2">{name}</h1>
+                    <p className="mt-1">{tag}</p>
                 </div>
                 <div className="col-md-2">
-                    <h4>Links</h4>
+                    <h4>{link.head}</h4>
                     <p className="mt-4">Facebook</p>
                     <p>Instagram</p>
                     <p>Twitter</p>
                     <p>Youtube</p>
                 </div>
                 <div className="col-md-4">
-                    <h4>Boyan</h4>
-                    <p className="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it</p>
+                    <h4>{topDes.head}</h4>
+                    <p className="mt-4">{topDes.des}</p>
                 </div>
             </div>
             <div className="d-flex align-items-center justify-content-center mt-5">

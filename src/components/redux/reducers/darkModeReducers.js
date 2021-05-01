@@ -3,17 +3,17 @@ import { ACTIVE_DARKMODE, DEACTIVE_DARKMODE } from "../constants/DarkMode"
 /* eslint-disable import/no-anonymous-default-export */
 const initialState = {
     nav: {
-        color: '#FFFFFF',
-        text: '#3D3D3D',
+        color: '#424141',
+        text: '#FFFFFF',
     },
     footer: {
-        color: '#FFFFFF',
-        text: '#3D3D3D',
+        color: '#424141',
+        text: '#FFFFFF',
     },
-    theme: 'white',
-    color: '#FFFFFF',
-    text: '#3D3D3D',
-    loading: true
+    theme: 'dark',
+    color: '#3D3D3D',
+    text: '#FFFFFF',
+    loading: false
 }
 
 export default (modeData = initialState, action) => {

@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { LanguageContext } from '../context/Language';
+import './Banner.css';
 
 const Banner = () => {
+    const { dataLang } = useContext(LanguageContext)
+    const { text, loginTextMain, loginButton  } = dataLang[0].banner
     return (
-        <div className="text-center container p-5" style={{height: '300px'}}>
-            <h1>Welcome to As Habus Samaniyyah</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it</p>
-            <a href="/register"><button type="button" className="btn btn-success  btn-lg">Register</button></a>
+        <div className="banner">
+            <div className="text-center container text-dark p-5">
+                <h1>{loginTextMain}</h1>
+                <p>{text}</p>
+                <a href="/register"><button type="button" className="btn btn-success  ">{loginButton}</button></a>
+            </div>
         </div>
     );
 };

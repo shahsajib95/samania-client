@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import UseFetch from '../Hooks/UseFetch';
@@ -6,28 +5,31 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AllPayment = () => {
- 
-    const { data, loading, error } = UseFetch(`https://thawing-mountain-56993.herokuapp.com/payment/getAllPaymentDetails`)
 
-    
+    const { data: pay, loading, error } = UseFetch(`https://thawing-mountain-56993.herokuapp.com/payment/getAllPaymentDetails/`)
+
+    const allPayment = pay.length !== 0 && pay.fund.map(t1 => ({ ...t1, ...pay.save.find(t2 => t2.date === t1.date) }))
+    console.log(allPayment)
+
     const errorData = () => toast.error(error, { position: toast.POSITION.TOP_RIGHT })
     error && errorData()
 
     const { color, text } = useSelector(state => state.modeData)
 
-    const netSavings = data.reduce((a, b) => a + b.savings, 0)
-    const netSadaqah = data.reduce((a, b) => a + b.sadaqah, 0)
-
+    const netSavingsFund = pay.length !== 0 && allPayment.length !== 0 ? allPayment.reduce((a, b) => a + parseInt(b.savings ? b.savings : 0), 0) : 0
+    const netSavingsSelf = pay.length !== 0 && allPayment.length !== 0 ? allPayment.reduce((a, b) => a + parseInt(b.savingsSelf ? b.savingsSelf : 0), 0) : 0
+    const netSadaqah = pay.length !== 0 && allPayment.length !== 0 ? allPayment.reduce((a, b) => a + parseInt(b.sadaqah ? b.sadaqah : 0), 0) : 0
     return (
         <div className="container text-center">
-            <h1 className="p-3">All Payment</h1>
-            <table className="table table-striped mt-5 mb-5">
+            <h1 className="p-3">Fund Total Account</h1>
+            <table className="table table-striped mt-5">
 
-                <thead style={{ color: text, backgroundColor: color }}>
+                <thead style={{ color: text, backgroundColor: color }} className="text-center">
                     <tr>
-                        <th style={{ color: text, backgroundColor: color }} scope="col">No</th>
                         <th style={{ color: text, backgroundColor: color }} scope="col">Month</th>
-                        <th style={{ color: text, backgroundColor: color }} scope="col">Savings</th>
+                        <th style={{ color: text, backgroundColor: color }} scope="col">Name</th>
+                        <th style={{ color: text, backgroundColor: color }} scope="col">20%</th>
+                        <th style={{ color: text, backgroundColor: color }} scope="col">80%</th>
                         <th style={{ color: text, backgroundColor: color }} scope="col">Sadaqah</th>
                     </tr>
                 </thead>
@@ -40,26 +42,30 @@ const AllPayment = () => {
                     </div>
                     :
                     <>
-                        <tbody>
+                        <tbody className="text-center">
 
-                            {data.map((item, index) =>
+                            {allPayment.length !== 0 && allPayment.map((item, index) =>
                                 <tr key={index}>
-                                    <th style={{ color: text, backgroundColor: color }}>{index}</th>
-                                    <td style={{ color: text, backgroundColor: color }}>{moment(item.createdAt).format('MMMM Do YYYY')}</td>
-                                    <td style={{ color: text, backgroundColor: color }}>{item.savings} Tk</td>
-                                    <td style={{ color: text, backgroundColor: color }}>{item.sadaqah} Tk</td>
+                                    <td style={{ color: text, backgroundColor: color }}>{item.date}</td>
+                                    <td style={{ color: text, backgroundColor: color }}>{item.name.split(' ')[0]}</td>
+                                    <td style={{ color: text, backgroundColor: color }}>{item.savings}</td>
+                                    <td style={{ color: text, backgroundColor: color }}>{item.savingsSelf}</td>
+                                    <td style={{ color: text, backgroundColor: color }}>{item.sadaqah}</td>
                                 </tr>)}
 
                         </tbody>
 
-                        <thead style={{ color: text, backgroundColor: color }}>
+                        <thead style={{ color: text, backgroundColor: color }} className="text-center">
                             <tr>
                                 <th style={{ color: text, backgroundColor: color }} scope="col">Total</th>
                                 <th style={{ color: text, backgroundColor: color }} scope="col"></th>
-                                <th style={{ color: text, backgroundColor: color }} scope="col">{netSavings.substring(1, 50)} Tk</th>
-                                <th style={{ color: text, backgroundColor: color }} scope="col">{netSadaqah.substring(1, 50)} Tk</th>
+                                <th style={{ color: text, backgroundColor: color }} scope="col">{netSavingsFund}</th>
+                                <th style={{ color: text, backgroundColor: color }} scope="col">{netSavingsSelf}</th>
+                                <th style={{ color: text, backgroundColor: color }} scope="col">{netSadaqah}</th>
                             </tr>
                         </thead>
+
+
                     </>}
 
             </table>

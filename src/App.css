@@ -1,6 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,700;1,500&display=swap');
-
-
+*{
+    font-family: 'Roboto' , 'Hind Siliguri', sans-serif;
+}
+html,
+body{
+overflow-x:hidden;
+margin: 0;
+    padding: 0;
+}
 a:hover{
     text-decoration: none;
 }
+.error{
+    color: red
+}
+
+@media only screen and (max-width: 499px) {
+    *{
+        font-size: 10px;
+    }
+    table{
+        font-size: 10px;
+    }
+  }

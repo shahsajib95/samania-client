@@ -14,10 +14,21 @@ import LoginFB from "./components/Login/LoginFB";
 import User from "./components/User/User";
 import Register from "./components/Login/Register";
 import AfterLoginBanner from "./components/Banner/AfterLoginBanner";
-import PaymentDetails from "./components/PaymentDetails/PaymentDetails";
+import PaymentFund from "./components/PaymentDetails/PaymentFund";
 import Footer from "./components/Footer/Footer";
 import Notice from "./components/Notice/Notice";
 import AllPayment from "./components/AllPayment/AllPayment";
+import PaymentSavings from "./components/PaymentDetails/PaymentSavings";
+// import Members from "./components/Members/Members";
+import { LanguageProvider } from "./components/context/Language";
+import About from "./components/About/About";
+import Contact from "./components/Contact/Contact";
+import AdminLogin from "./components/Admin/Login/AdminLogin";
+import Dashboard from "./components/Admin/Dashboard/Dashboard";
+import AdminPrivateRoute from "./components/AdminPrivateRoute/AdminPrivateRoute";
+import PendingUsers from "./components/Admin/User/PendingUsers";
+import AllMembers from "./components/Admin/Members/AllMembers";
+
 export const userData = JSON.parse(localStorage.getItem('user'))
 
 function App() {
@@ -37,42 +48,71 @@ function App() {
   const { color, text } = useSelector(state => state.modeData)
 
 
+
   return (
     <div style={{ backgroundColor: color, color: text }}>
+      <LanguageProvider>
+        <Notice />
 
-      <Notice />
-      <NavBar />
+        <Router>
+          <NavBar />
+          <Switch>
 
-      <Router>
-        <Switch>
+            <Route exact path="/">
+              {!userData ? <Banner /> : <AfterLoginBanner />}
+              {/* <Members /> */}
+            </Route>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/contact">
+              <Contact />
+            </Route>
 
-          <Route exact path="/">
-            {!userData ? <Banner /> : <AfterLoginBanner />}
-          </Route>
-          <Route path="/login">
-            <LoginFB />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route exact path="/:id/:name">
-            <User />
-          </Route>
+            <Route path="/login">
+              <LoginFB />
+            </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
 
-          <Route path="/payment/:id/:name">
-            <PaymentDetails />
-          </Route>
-          <Route path="/allPayments">
-            <AllPayment />
-          </Route>
+            <Route path="/:id/:name">
+              <User />
+            </Route>
 
-        </Switch>
+            <Route path="/payment/fund/:id/:name">
+              <PaymentFund />
+            </Route>
+            <Route path="/payment/savings/:id/:name">
+              <PaymentSavings />
+            </Route>
 
-      </Router>
+            <Route path="/allPayments">
+              <AllPayment />
+            </Route>
 
-      <Footer />
+            <Route path="/admin">
+              <AdminLogin />
+            </Route>
 
+            <AdminPrivateRoute path="/dashboard">
+              <Dashboard />
+            </AdminPrivateRoute>
 
+            <AdminPrivateRoute  path="/all-Members">
+              <AllMembers />
+            </AdminPrivateRoute>
+            <AdminPrivateRoute  path="/pending-users">
+              <PendingUsers />
+            </AdminPrivateRoute>
+
+          </Switch>
+
+        </Router>
+
+        <Footer />
+
+      </LanguageProvider>
     </div>
   );
 }
