@@ -39,7 +39,7 @@ const AssesmentSchool = () => {
 
   const onSubmit = data => {
     setLoad(true);
-    fetch('http://localhost:5000/mailHighSchoolAsses', {
+    fetch('https://thawing-mountain-56993.herokuapp.com/mailHighSchoolAsses', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

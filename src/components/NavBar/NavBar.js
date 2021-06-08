@@ -16,14 +16,15 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { LanguageContext } from '../context/Language';
+import Fetch from '../Hooks/fetch';
 
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
-
+    const { data: event } = Fetch(`http://localhost:5000/admin/getEvent/active`)
     const toggle = () => setIsOpen(!isOpen);
     const { nav } = useSelector(state => state.modeData)
     const { dataLang } = useContext(LanguageContext)
-    const { home, members, about, contact, hello, login, register } = dataLang[0].navbar
+    const { home, events, about, contact, hello, login, register } = dataLang[0].navbar
     return (
 
         <Navbar expand="md" style={{ color: nav.text, backgroundColor: nav.color }} >
@@ -35,7 +36,9 @@ const NavBar = () => {
                         <NavLink style={{ color: nav.text, marginLeft: '20px' }} href="/">{home}</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink style={{ color: nav.text, marginLeft: '20px' }} href="/members">{members}</NavLink>
+                        <NavLink style={{ color: nav.text, marginLeft: '20px' }} href="/allEvents">
+                            <span className="badge rounded-pill bg-warning mr-2">{event.length === 0 ? '' : event.length} </span>
+                            {events}</NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink style={{ color: nav.text, marginLeft: '20px' }} href="/about">{about}</NavLink>

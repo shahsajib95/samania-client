@@ -1,27 +1,72 @@
 import moment from 'moment';
-import React from 'react';
-import UseFetch from '../../Hooks/UseFetch';
-// import { FaChild } from "react-icons/fa";
+import React, { useCallback, useEffect, useState } from 'react';
+import { userData } from '../../../App';
+import { FaUserNinja } from "react-icons/fa";
 import './PendingUsers.css'
+import Preloader from '../../Preloader/Preloader';
 
 const PendingUsers = () => {
-    const { data, loading, error } = UseFetch('http://localhost:5000/admin/pendingUser')
-    console.log(data, loading, error)
+
+    const [user, setUser] = useState([])
+    const [loading, setLoading] = useState([])
+
+    const getPendingUser = useCallback(() => {
+        setLoading(true)
+        fetch('https://thawing-mountain-56993.herokuapp.com/admin/pendingUser', {
+            method: 'GET',
+            headers: {
+                authorization: userData.token
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                setUser(data)
+                setLoading(false)
+            })
+    }, [])
+
+    useEffect(() => {
+        getPendingUser()
+    }, [getPendingUser])
+
+    const [status, setStatus] = useState(null)
+
+    const handleActive = (id) => {
+        fetch(`http://localhost:5000/admin/activeUser/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: userData.token
+            },
+            body: JSON.stringify({ status: status })
+        })
+            .then(res => res.json())
+            .then(data => {
+                getPendingUser()
+            })
+    }
+
     return (
         <div className="p-5 userPending">
             <h2 className="p-2 text-center"><b>Pending Users</b></h2>
+            {loading ? '' : user.length === 0 && <p className="text-center mt-5 text-warning"><FaUserNinja style={{ fontSize: '2rem' }} />No User Found</p>}
             {loading ?
-                <div className="spinner-border text-primary  mt-3" role="status">
-                    <span className="visually-hidden"></span>
-                </div>
+                <Preloader />
                 :
                 <div className="row">
-                    {data.map(user =>
-                        <div key={user.id} className="col-md-4">
-                            <div className="bg-warning text-white">
-                                <div className="card-header ">
-                                    Status: <span>{user.status}</span>
+                    {user.map(user =>
+                        <div key={user.id} className="col-md-4 p-2">
+                            <div className="bg-secondary text-white">
+
+                                <div className="card-header">
+                                    <span className="ml-2">
+                                        <select name="status " className="pl-3 pr-3 pt-2 pb-1 mt-1 bg-info text-white" onClick={(e) => setStatus(e.target.value)} onChange={() => handleActive(user.id)}>
+                                            <option defaultValue={user.status === 'pending'} className="text-white" value="pending">Pending</option>
+                                            <option defaultValue={user.status === 'active'} className="text-white" value="active">Active</option>
+                                        </select>
+                                    </span>
                                 </div>
+
                                 <div className="d-flex justify-content-center">
                                     <img src={user.avatar} alt="user" className="img-fluid p-3" width="150px" />
                                 </div>
@@ -48,6 +93,10 @@ const PendingUsers = () => {
 
                                     <p><b>Mother/Wife:</b>
                                         <span className="text-des">{user.motherOrWife}</span>
+                                    </p>
+
+                                    <p><b>Adress</b>
+                                        <span className="text-des">{user.adress}</span>
                                     </p>
 
                                 </div>

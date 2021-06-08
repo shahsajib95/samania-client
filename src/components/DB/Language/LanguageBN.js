@@ -2,7 +2,7 @@ const BN = [
     {
         navbar: {
             home: 'হোম',
-            members: 'সদস্য',
+            events: 'প্রোগ্রাম',
             contact: 'যোগাযোগ',
             about: 'আমাদের সম্পর্কে',
             hello: 'স্বাগতম',

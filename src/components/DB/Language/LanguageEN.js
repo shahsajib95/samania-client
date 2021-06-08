@@ -2,7 +2,7 @@ const EN = [
     {
         navbar: {
             home: 'Home',
-            members: 'Members',
+            events: 'Events',
             contact: 'Contact',
             about: 'About',
             hello: 'hello',

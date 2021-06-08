@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaUserFriends, FaRegAddressCard, FaDollarSign } from 'react-icons/fa';
+import { FaRegAddressCard } from 'react-icons/fa';
 import UseFetch from '../../Hooks/UseFetch';
 
 const Dashboard = () => {
@@ -7,7 +7,8 @@ const Dashboard = () => {
         localStorage.removeItem('user')
         window.location = "/admin"
     }
-    const { data } = UseFetch('http://localhost:5000/admin/pendingUserCount')
+    const { data: pending } = UseFetch('https://thawing-mountain-56993.herokuapp.com/admin/pendingUserCount')
+    const { data: active } = UseFetch('http://localhost:5000/admin/allUsersCount')
 
     return (
         <div className="p-5">
@@ -21,20 +22,19 @@ const Dashboard = () => {
                 <div className="text-center">
 
                     <a href="/all-Members">
-                        <button type="button" className="btn btn-primary "><FaUserFriends className="mb-1" /> All Members</button>
+                        <button type="button" className="btn btn-primary ">
+                            <span className="badge bg-secondary mr-2">{active}</span>
+                        All Members
+                        </button>
                     </a>
 
-                    <a href="/">
+                    <a href="/addEvent">
                         <button type="button" className="btn btn-success ml-2"><FaRegAddressCard className="mb-1" /> Add Events</button>
-                    </a>
-
-                    <a href="/">
-                        <button type="button" className="btn btn-info ml-2"><FaDollarSign className="mb-1" /> Payments </button>
                     </a>
 
                     <a href="/pending-users">
                         <button type="button" className="btn btn-warning text-white ml-2">
-                            <span className="badge bg-secondary mr-2">{data}</span>
+                            <span className="badge bg-secondary mr-2">{pending}</span>
                         Pending Requests
                         </button>
                     </a>

@@ -16,7 +16,7 @@ const AdminLogin = () => {
     const onSubmit = (data) => {
 
         setLoading(true)
-        fetch(`http://localhost:5000/admin/login/${data.email}`, {
+        fetch(`https://thawing-mountain-56993.herokuapp.com/admin/login/${data.email}`, {
             method: 'GET',
             headers: { authorization: data.password }
         }).then(res => res.json())

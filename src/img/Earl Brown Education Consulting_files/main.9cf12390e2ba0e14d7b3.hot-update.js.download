@@ -37,7 +37,7 @@ const AssesmentCollege = () => {
   const [msg, setMsg] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(null);
 
   const onSubmit = data => {
-    fetch('http://localhost:5000/mailHighEduAsses', {
+    fetch('https://thawing-mountain-56993.herokuapp.com/mailHighEduAsses', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

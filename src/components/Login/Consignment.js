@@ -14,7 +14,7 @@ const Consignment = (props) => {
 
     const submit = () => {
         setLoading(true)
-        fetch(`http://localhost:5000/user/register`, {
+        fetch(`https://thawing-mountain-56993.herokuapp.com/user/register`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({...props.allInfo, status: 'pending'})

@@ -1,13 +1,14 @@
-import {  useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 // eslint-disable-next-line
 const Fetch = (url) => {
 
     const [data, setData] = useState([])
     const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
-       useEffect(() => {
+    useEffect(() => {
+        setLoading(true)
         fetch(url, {
             method: 'GET'
         })
@@ -25,7 +26,7 @@ const Fetch = (url) => {
                 setError(err.message)
                 setLoading(false)
             })
-       }, [url])
+    }, [url])
 
     return { data, loading, error }
 

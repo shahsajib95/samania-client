@@ -4883,7 +4883,7 @@ const AssesmentCollege = () => {
   const [show, setShow] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(null);
 
   const onSubmit = data => {
-    fetch('http://localhost:5000/mailHighEduAsses', {
+    fetch('https://thawing-mountain-56993.herokuapp.com/mailHighEduAsses', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -5691,7 +5691,7 @@ const AssesmentSchool = () => {
 
   const onSubmit = data => {
     console.log(data);
-    fetch('http://localhost:5000/mailHighSchoolAsses', {
+    fetch('https://thawing-mountain-56993.herokuapp.com/mailHighSchoolAsses', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

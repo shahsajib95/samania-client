@@ -20,7 +20,7 @@ const LoginFB = () => {
     const onSubmit = (data) => {
 
         setLoading(true)
-        fetch(`http://localhost:5000/user/login/${data.email}`, {
+        fetch(`https://thawing-mountain-56993.herokuapp.com/user/login/${data.email}`, {
             method: 'GET',
             headers: { authorization: data.password }
         }).then(res => res.json())

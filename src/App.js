@@ -19,7 +19,6 @@ import Footer from "./components/Footer/Footer";
 import Notice from "./components/Notice/Notice";
 import AllPayment from "./components/AllPayment/AllPayment";
 import PaymentSavings from "./components/PaymentDetails/PaymentSavings";
-// import Members from "./components/Members/Members";
 import { LanguageProvider } from "./components/context/Language";
 import About from "./components/About/About";
 import Contact from "./components/Contact/Contact";
@@ -28,6 +27,11 @@ import Dashboard from "./components/Admin/Dashboard/Dashboard";
 import AdminPrivateRoute from "./components/AdminPrivateRoute/AdminPrivateRoute";
 import PendingUsers from "./components/Admin/User/PendingUsers";
 import AllMembers from "./components/Admin/Members/AllMembers";
+import AdminEvent from "./components/Admin/Event/AdminEvent";
+import Events from "./components/Events/Events";
+import EventPaymentForm from "./components/Events/EventPaymentForm";
+import EventsDetails from "./components/Events/EventsDetails";
+import ShowEvents from "./components/Admin/Event/ShowEvents";
 
 export const userData = JSON.parse(localStorage.getItem('user'))
 
@@ -46,8 +50,6 @@ function App() {
   }, [dispatch, data])
 
   const { color, text } = useSelector(state => state.modeData)
-
-
 
   return (
     <div style={{ backgroundColor: color, color: text }}>
@@ -76,7 +78,7 @@ function App() {
               <Register />
             </Route>
 
-            <Route path="/:id/:name">
+            <Route exact path="/:id/:name">
               <User />
             </Route>
 
@@ -87,7 +89,18 @@ function App() {
               <PaymentSavings />
             </Route>
 
-            <Route path="/allPayments">
+
+            <Route path="/allEvents">
+              <Events />
+            </Route>
+            <Route path="/eventDetails/:evID/:evName">
+              <EventsDetails />
+            </Route>
+            <Route path="/event/:evID/:evName">
+              <EventPaymentForm />
+            </Route>
+
+            <Route path="/paid/:id/:name">
               <AllPayment />
             </Route>
 
@@ -104,6 +117,12 @@ function App() {
             </AdminPrivateRoute>
             <AdminPrivateRoute  path="/pending-users">
               <PendingUsers />
+            </AdminPrivateRoute>
+            <AdminPrivateRoute  path="/addEvent">
+              <AdminEvent />
+            </AdminPrivateRoute>
+            <AdminPrivateRoute  path="/showEvents">
+              <ShowEvents />
             </AdminPrivateRoute>
 
           </Switch>
